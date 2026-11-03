@@ -8,7 +8,7 @@ not_found_handling = "single-page-application"
 [[d1_databases]]
 binding = "DB"
 database_name = "axiom-db"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "cf3c0a64-e0b3-4f78-9687-0bd4a7735784"
 migrations_dir = "migrations"
 [[durable_objects.bindings]]
 name = "CHAT_ROOMS"
