@@ -1,6 +1,26 @@
 import{useEffect,useRef,useState}from'react';import{Radio,Plus,LogOut,Send,Hash,Users}from'lucide-react';
 type U={id:string;username:string};type G={id:string;name:string;description:string};type M={id:string;username:string;body:string;created_at:string};
-async function api(p:string,o:RequestInit={}){let r=await fetch(p,{...o,credentials:'include',headers:{'Content-Type':'application/json',...(o.headers||{})}});let d=await r.json();if(!r.ok)throw Error(d.error||'Request failed');return d}
+async function api(
+  p: string,
+  o: RequestInit = {}
+): Promise<any> {
+  const r = await fetch(p, {
+    ...o,
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      ...(o.headers || {})
+    }
+  });
+
+  const d: any = await r.json();
+
+  if (!r.ok) {
+    throw new Error(d.error || "Request failed");
+  }
+
+  return d;
+}
 export default function App(){const[me,S]=useState<U|null>(null),[mode,SM]=useState('login'),[name,SN]=useState(''),[pass,SP]=useState(''),[err,SE]=useState(''),[groups,SG]=useState<G[]>([]),[active,SA]=useState<G|null>(null),[msgs,SMG]=useState<M[]>([]),[draft,SD]=useState(''),[newName,SNN]=useState(''),[creating,SC]=useState(false),[busy,SB]=useState(false);const ws=useRef<WebSocket|null>(null);
 async function refreshGroups(){let d=await api('/api/groups');SG(d.groups);if(!active&&d.groups[0])SA(d.groups[0])}
 useEffect(()=>{api('/api/me').then(async d=>{S(d.user);if(d.user)await refreshGroups()}).catch(e=>SE(e.message))},[]);
